@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))"/>
+  <PropertyGroup>
+    <IsPackable>true</IsPackable>
+    <SignAssembly>true</SignAssembly>
+    <PackageIcon>nuget-icon.png</PackageIcon>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <DebugSymbols>true</DebugSymbols>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="$(SolutionRoot)README.md" Pack="true" PackagePath="." Visible="false" />
+    <None Include="$(SolutionRoot)LICENSE" Pack="true" PackagePath="." Visible="false" />
+    <None Include="$(SolutionRoot)nuget-icon.png" Pack="true" PackagePath="." Visible="false" />
+  </ItemGroup>
+
+  <!-- suppress warnings for netstandard2.0 xml docs -->
+  <PropertyGroup Condition="'$(TargetFramework)'=='netstandard2.0'">
+    <NoWarn>$(NoWarn);IDT001;IDT002</NoWarn>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All"/>
+    <PackageReference Include="ConfigureAwaitChecker.Analyzer" Version="5.0.0.1" PrivateAssets="All" />
+    <PackageReference Include="SauceControl.InheritDoc" Version="2.0.2" PrivateAssets="All" />
+  </ItemGroup>
+</Project>
